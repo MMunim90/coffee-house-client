@@ -27,7 +27,7 @@ const Footer = () => {
         </div>
           <div className="space-y-3 text-black">
             <h1 className="text-5xl font-bold">Connect with Us</h1>
-            <fieldset className="space-y-1">
+            <fieldset className="space-y-1 flex flex-col">
               <input type="text" className="input bg-[#f1ddc3]" placeholder="Name" />
               <input type="email" className="input bg-[#f1ddc3]" placeholder="Email" />
               <input type="text" className="input bg-[#f1ddc3]" placeholder="Message" />

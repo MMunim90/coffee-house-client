@@ -8,9 +8,11 @@ import AddCoffee from "./components/AddCoffee.jsx";
 import UpdateCoffee from "./components/UpdateCoffee.jsx";
 import Home from "./components/Home.jsx";
 import CoffeeDetails from "./components/CoffeeDetails.jsx";
-import ErrorPage from "./components/ErrorPage.jsx";
 import SignIn from "./components/SignIn.jsx";
 import SignUp from "./components/SignUp.jsx";
+import AuthProvider from "./context/AuthProvider.jsx";
+import Users from "./components/Users.jsx";
+import ErrorPage from "./components/ErrorPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -48,14 +50,21 @@ const router = createBrowserRouter([
       },
       {
         path: "/*",
-        element: <ErrorPage></ErrorPage>,
+        Component: ErrorPage
       },
+      {
+        path: "users",
+        loader: () => fetch('http://localhost:3000/users'),
+        Component: Users
+      }
     ],
   },
 ]);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </StrictMode>
 );
