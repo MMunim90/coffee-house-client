@@ -34,7 +34,7 @@ const AddCoffee = () => {
       });
   };
   return (
-    <div className="p-28">
+    <div className="p-28 bg-[url(https://i.ibb.co/q3j15yY0/11.png)] bg-cover bg-no-repeat pb-20 text-black">
       <h1 className='font-bold text-xl'><FaArrowLeftLong className='inline' /> &nbsp;<Link to='/'>Back to home</Link></h1>
       <div className="p-20 text-center space-y-4">
         <h1 className="text-6xl">Add New Coffee</h1>
@@ -44,7 +44,7 @@ const AddCoffee = () => {
           next favorite brew.
         </p>
       </div>
-      <form onSubmit={handleAddCoffee}>
+      <form onSubmit={handleAddCoffee} className="text-white">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <fieldset className="fieldset bg-base-200 border-base-300 rounded-box border p-4">
             <label className="label">Name</label>
@@ -120,7 +120,7 @@ const AddCoffee = () => {
         </fieldset>
         </div>
 
-        <input type="submit" className="btn w-full mt-6" value="Add Coffee" />
+        <input type="submit" className="btn w-full mt-6 bg-[#D2B48C] font-rancho text-lg border-black border-2" value="Add Coffee" />
       </form>
     </div>
   );
