@@ -34,7 +34,7 @@ const SignUp = () => {
         };
 
         // save profile info in the database
-        fetch("http://localhost:3000/users", {
+        fetch("https://coffee-store-server-ruby-one.vercel.app/users", {
           method: "POST",
           headers: {
             "content-type": "application/json",
