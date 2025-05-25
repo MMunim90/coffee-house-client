@@ -3,6 +3,7 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router";
 import { AuthContext } from "../context/AuthContext";
+import axios from "axios";
 
 const SignIn = () => {
     const {signInUser} = use(AuthContext)
@@ -22,18 +23,24 @@ const SignIn = () => {
                 email,
                 lastSignInTime : result.user?.metadata?.lastSignInTime
             }
-            // update last sign in to the datebase
-            fetch('https://coffee-store-server-ruby-one.vercel.app/users', {
-                method: 'PATCH',
-                headers: {
-                    'content-type': 'application/json'
-                },
-                body: JSON.stringify(signInInfo)
-            })
-            .then(res => res.json())
+
+            axios.patch('https://coffee-store-server-ruby-one.vercel.app/users', signInInfo)
             .then(data => {
-                console.log('after update patch', data)
+              console.log(data.data);
             })
+
+            // update last sign in to the datebase
+            // fetch('https://coffee-store-server-ruby-one.vercel.app/users', {
+            //     method: 'PATCH',
+            //     headers: {
+            //         'content-type': 'application/json'
+            //     },
+            //     body: JSON.stringify(signInInfo)
+            // })
+            // .then(res => res.json())
+            // .then(data => {
+            //     console.log('after update patch', data)
+            // })
         })
         .catch(error => {
             console.log(error);

@@ -3,6 +3,7 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../context/AuthContext";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 const SignUp = () => {
   const navigate = useNavigate()
@@ -32,26 +33,35 @@ const SignUp = () => {
           creationTime: result.user?.metadata?.creationTime,
           lastSignInTime: result.user?.metadata?.lastSignInTime,
         };
-
-        // save profile info in the database
-        fetch("https://coffee-store-server-ruby-one.vercel.app/users", {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(userProfile),
+        // using axios
+        axios.post("https://coffee-store-server-ruby-one.vercel.app/users", userProfile)
+        .then(data => {
+          if(data.data.insertedId){
+            console.log('data added to the database')
+          }
         })
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.insertedId) {
-              Swal.fire({
-                title: "Sign Up Successfully!",
-                icon: "success",
-                draggable: true,
-              });
-              navigate("/");
-            }
-          });
+
+
+        // using fetch
+        // save profile info in the database
+        // fetch("https://coffee-store-server-ruby-one.vercel.app/users", {
+        //   method: "POST",
+        //   headers: {
+        //     "content-type": "application/json",
+        //   },
+        //   body: JSON.stringify(userProfile),
+        // })
+        //   .then((res) => res.json())
+        //   .then((data) => {
+        //     if (data.insertedId) {
+        //       Swal.fire({
+        //         title: "Sign Up Successfully!",
+        //         icon: "success",
+        //         draggable: true,
+        //       });
+        //       navigate("/");
+        //     }
+        //   });
       })
       .catch((error) => {
         console.log(error);

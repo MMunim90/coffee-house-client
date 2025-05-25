@@ -1,29 +1,28 @@
-import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { AiFillDelete } from "react-icons/ai";
 import { FaRegEye } from "react-icons/fa";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { MdEdit } from "react-icons/md";
-import { Link, useLoaderData } from "react-router";
-import Swal from "sweetalert2";
-const Users = () => {
-  const initialUsers = useLoaderData();
-  const [users, setUsers] = useState(initialUsers);
+import { Link } from "react-router";
 
-  // useEffect(() => {
-  //   fetch('/')
-  //   .then(res => res.json())
-  //   .then(data => {
-  //     console.log(data);
-  //   })
-  // }, [])
+const Users2 = () => {
 
-  // useEffect(() => {
-  //   axios.get('/')
-  //   .then(data => {
-  //     console.log(data.data); 
-  //   })
-  // }, [])
+    const {isPending, isError, error, data: users} = useQuery({
+        queryKey: ['users'],
+        queryFn: async () => {
+            const res = await fetch('https://coffee-store-server-ruby-one.vercel.app/users');
+            return res.json();
+        }
+    })
+
+//   const [users, setUsers] = useState([]);
+
+//   useEffect(() => {
+//     fetch("https://coffee-store-server-ruby-one.vercel.app/users")
+//       .then((res) => res.json())
+//       .then((data) => setUsers(data));
+//   }, []);
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -42,18 +41,26 @@ const Users = () => {
           .then((res) => res.json())
           .then((data) => {
             if (data.deletedCount) {
-              const remainingUsers = users.filter((user) => user._id !== id);
-              setUsers(remainingUsers);
-                    Swal.fire({
-                      title: "Deleted!",
-                      text: "User has been deleted.",
-                      icon: "success",
-                    });
+              //   const remainingUsers = users.filter((user) => user._id !== id);
+              //   setUsers(remainingUsers);
+              //   Swal.fire({
+              //     title: "Deleted!",
+              //     text: "User has been deleted.",
+              //     icon: "success",
+              //   });
             }
           });
       }
     });
   };
+
+  if(isPending){
+    return <span className="loading loading-ring loading-xl"></span>
+  }
+
+  if(isError){
+    return <p>{error.message}</p>
+  }
 
   return (
     <div className="mt-6 px-28">
@@ -62,7 +69,7 @@ const Users = () => {
           <FaArrowLeftLong className="inline" /> &nbsp;
           <Link to="/">Back to home</Link>
         </h1>
-        <h2 className="text-3xl text-center">Users: {users.length}</h2>
+        {/* <h2 className="text-3xl text-center">Users: {users.length}</h2> */}
       </div>
 
       <div className="overflow-x-auto my-6">
@@ -123,4 +130,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default Users2;
